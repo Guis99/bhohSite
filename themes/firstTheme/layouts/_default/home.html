@@ -1,6 +1,11 @@
 {{ define "main" }}
   <main>
-    {{ .Content }}
+    {{ .Content }}  
   </main>
+  
+  {{ range site.RegularPages }}
+    <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+    {{ .Summary }}
+  {{ end }}
+  
 {{ end }}
-
