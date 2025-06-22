@@ -2,19 +2,30 @@ baseURL = 'https://example.org/'
 languageCode = 'en-US'
 title = 'gatordynamics'
 
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['\[', '\]'], ['$$', '$$']]
+          inline = [['\(', '\)']]
+[params]
+  math = true
+
 [[menus.main]]
-name = 'About Me'
+name = 'Home'
 pageRef = '/'
 weight = 10
 
 [[menus.main]]
 name = 'Projects'
-pageRef = '/Projects'
+pageRef = '/projects'
 weight = 20
 
 [[menus.main]]
-name = 'Thoughts'
-pageRef = '/posts'
+name = 'Blog'
+pageRef = '/blog'
 weight = 30
 
 [module]

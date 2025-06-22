@@ -13,7 +13,7 @@ Renders a menu for the given menu ID.
 {{- with index site.Menus $menuID }}
   <nav>
     <!-- 1) Add a class to this top-level <ul> so we can style it horizontally -->
-    <ul class="horizontal-menu">
+    <ul class="flex inline-flex space-x-4">
       {{- partial "inline/menu/walk.html" (dict "page" $page "menuEntries" .) }}
     </ul>
   </nav>
@@ -38,7 +38,7 @@ Renders a menu for the given menu ID.
       {{- end }}
     {{- end }}
 
-    <li>
+    <li class="border border-blue-500 rounded px-4 py-2">
       <a
         {{- range $k, $v := $attrs }}
           {{- with $v }}

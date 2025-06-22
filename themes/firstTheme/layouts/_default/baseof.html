@@ -2,12 +2,15 @@
 <html lang="{{ site.Language.LanguageCode }}" dir="{{ or site.Language.LanguageDirection `ltr` }}">
 <head>
   {{ partial "head.html" . }}
+  {{ if .Param "math" }}
+    {{ partialCached "math.html" . }}
+  {{ end }}
 </head>
-<body>
+<body class="w-full">
   <header>
     {{ partial "header.html" . }}
   </header>
-  <main>
+  <main class="max-w-screen-lg mx-auto">
     {{ block "main" . }}{{ end }}
   </main>
   <footer>

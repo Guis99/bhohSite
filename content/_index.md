@@ -5,7 +5,4 @@ layout = "home"
 draft = false
 +++
 
-Brian Hoh hunudafjh
-
-
-Your homepage content here!
+# Hi, I'm Brian!
