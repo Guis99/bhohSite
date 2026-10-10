@@ -1,7 +1,15 @@
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
+{{ with or .Description site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
+<script>
+  // Set --max-text-width from the physical screen so the container caps at 75% of
+  // it; without this the CSS fallback (1400px) is used. Runs synchronously in
+  // <head> to avoid a layout flash. Does not re-run when the window moves to a
+  // different monitor; reload to update.
+  document.documentElement.style.setProperty('--max-text-width',
+    Math.round(window.screen.width * 0.75) + 'px');
+</script>
+<link rel="icon" href="{{ "favicon.ico" | relURL }}">
 {{ partialCached "head/css.html" . }}
 {{ partialCached "head/js.html" . }}
-<!-- <script src="https://cdn.tailwindcss.com"></script> -->
-

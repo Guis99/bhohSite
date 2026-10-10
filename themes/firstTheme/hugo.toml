@@ -1,21 +1,5 @@
-baseURL = 'https://example.org/'
+# Theme defaults. The site's own hugo.toml supplies the title, baseURL and main menu.
 languageCode = 'en-US'
-title = 'gatordynamics'
-
-[[menus.main]]
-name = 'Home'
-pageRef = '/'
-weight = 10
-
-[[menus.main]]
-name = 'Posts'
-pageRef = '/posts'
-weight = 20
-
-[[menus.main]]
-name = 'Tags'
-pageRef = '/tags'
-weight = 30
 
 [module]
   [module.hugoVersion]

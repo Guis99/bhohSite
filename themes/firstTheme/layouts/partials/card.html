@@ -1,0 +1,21 @@
+{{- /*
+Renders one page as a clickable card.
+
+@context {page} . The page to render.
+
+@example: {{ partial "card.html" . }}
+*/}}
+
+<li class="card">
+  <a class="card__link" href="{{ .RelPermalink }}">
+    <h2 class="card__title">{{ .LinkTitle }}</h2>
+    {{- if and (eq .Kind "page") (and (not .Date.IsZero) (ne .Section "faq")) }}
+      <time class="card__date" datetime="{{ .Date | time.Format "2006-01-02" }}">
+        {{ .Date | time.Format ":date_medium" }}
+      </time>
+    {{- end }}
+    {{- with or .Description .Summary }}
+      <p class="card__summary">{{ . | plainify | truncate 180 }}</p>
+    {{- end }}
+  </a>
+</li>

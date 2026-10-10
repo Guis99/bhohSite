@@ -2,8 +2,18 @@
 <html lang="en-us" dir="ltr">
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Red | Gatordynamics</title>
+<meta name="description" content="Personal site of Brian Hoh.">
+<script>
+  
+  
+  
+  
+  document.documentElement.style.setProperty('--max-text-width',
+    Math.round(window.screen.width * 0.75) + 'px');
+</script>
+<link rel="icon" href="/favicon.ico">
 
     <link rel="stylesheet" href="/css/main.css">
 
@@ -11,50 +21,74 @@
       <script src="/js/main.js"></script>
 
 
-
-
 </head>
 <body>
-  <header>
-    <h1>Gatordynamics</h1>
-
-  <nav>
-    <ul>
-    <li>
-      <a href="/">Home</a>
-    </li>
-    <li>
-      <a href="/posts/">Posts</a>
-    </li>
-    <li>
-      <a href="/tags/">Tags</a>
-    </li>
-    </ul>
+  <header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-title" href="/">Brian Hoh</a>
+    
+  <nav class="nav" aria-label="Main">
+      <a class="nav__link" href="/">Home</a>
+      <a class="nav__link" href="/blog/">Blog</a>
+      <a class="nav__link" href="/faq/">FAQ</a>
+      <a class="nav__link" href="/contact/">Contact</a>
   </nav>
 
+  </div>
+</header>
 
-  </header>
-  <main>
+  <main class="container">
     
-  <h1>Red</h1>
+  <header class="page-header">
+    <h1 class="page-title">Red</h1>
+  </header>
+
   
-  
-    <h2><a href="/posts/post-3/">Post 3</a></h2>
-    <p>Occaecat aliqua consequat laborum ut ex aute aliqua culpa quis irure esse magna dolore quis. Proident fugiat labore eu laboris officia Lorem enim. Ipsum occaecat cillum ut tempor id sint aliqua incididunt nisi incididunt reprehenderit. Voluptate ad minim sint est aute aliquip esse occaecat tempor officia qui sunt. Aute ex ipsum id ut in est velit est laborum incididunt. Aliqua qui id do esse sunt eiusmod id deserunt eu nostrud aute sit ipsum. Deserunt esse cillum Lorem non magna adipisicing mollit amet consequat.</p>
-  
-    <h2><a href="/posts/post-2/">Post 2</a></h2>
-    <p>Anim eiusmod irure incididunt sint cupidatat. Incididunt irure irure irure nisi ipsum do ut quis fugiat consectetur proident cupidatat incididunt cillum. Dolore voluptate occaecat qui mollit laborum ullamco et. Ipsum laboris officia anim laboris culpa eiusmod ex magna ex cupidatat anim ipsum aute. Mollit aliquip occaecat qui sunt velit ut cupidatat reprehenderit enim sunt laborum. Velit veniam in officia nulla adipisicing ut duis officia.</p>
-<p>Exercitation voluptate irure in irure tempor mollit Lorem nostrud ad officia. Velit id fugiat occaecat do tempor. Sit officia Lorem aliquip eu deserunt consectetur. Aute proident deserunt in nulla aliquip dolore ipsum Lorem ut cupidatat consectetur sit sint laborum. Esse cupidatat sit sint sunt tempor exercitation deserunt. Labore dolor duis laborum est do nisi ut veniam dolor et nostrud nostrud.</p>
-  
-    <h2><a href="/posts/post-1/">Post 1</a></h2>
-    <p>Tempor proident minim aliquip reprehenderit dolor et ad anim Lorem duis sint eiusmod. Labore ut ea duis dolor. Incididunt consectetur proident qui occaecat incididunt do nisi Lorem. Tempor do laborum elit laboris excepteur eiusmod do. Eiusmod nisi excepteur ut amet pariatur adipisicing Lorem.</p>
-<p>Occaecat nulla excepteur dolore excepteur duis eiusmod ullamco officia anim in voluptate ea occaecat officia. Cillum sint esse velit ea officia minim fugiat. Elit ea esse id aliquip pariatur cupidatat id duis minim incididunt ea ea. Anim ut duis sunt nisi. Culpa cillum sit voluptate voluptate eiusmod dolor. Enim nisi Lorem ipsum irure est excepteur voluptate eu in enim nisi. Nostrud ipsum Lorem anim sint labore consequat do.</p>
-  
+    <ul class="cards">
+        
+
+<li class="card">
+  <a class="card__link" href="/posts/post-3/">
+    <h2 class="card__title">Post 3</h2>
+      <time class="card__date" datetime="2023-03-15">
+        Mar 15, 2023
+      </time>
+      <p class="card__summary">Occaecat aliqua consequat laborum ut ex aute aliqua culpa quis irure esse magna dolore quis. Proident fugiat labore eu laboris officia Lorem enim. Ipsum occaecat cillum ut tempor …</p>
+  </a>
+</li>
+
+        
+
+<li class="card">
+  <a class="card__link" href="/posts/post-2/">
+    <h2 class="card__title">Post 2</h2>
+      <time class="card__date" datetime="2023-02-15">
+        Feb 15, 2023
+      </time>
+      <p class="card__summary">Anim eiusmod irure incididunt sint cupidatat. Incididunt irure irure irure nisi ipsum do ut quis fugiat consectetur proident cupidatat incididunt cillum. Dolore voluptate occaecat …</p>
+  </a>
+</li>
+
+        
+
+<li class="card">
+  <a class="card__link" href="/posts/post-1/">
+    <h2 class="card__title">Post 1</h2>
+      <time class="card__date" datetime="2023-01-15">
+        Jan 15, 2023
+      </time>
+      <p class="card__summary">Tempor proident minim aliquip reprehenderit dolor et ad anim Lorem duis sint eiusmod. Labore ut ea duis dolor. Incididunt consectetur proident qui occaecat incididunt do nisi …</p>
+  </a>
+</li>
+
+    </ul>
 
   </main>
-  <footer>
-    <p>Copyright 2026. All rights reserved.</p>
+  <footer class="site-footer">
+  <div class="container">
+    <p>&copy; 2026 Brian Hoh</p>
+  </div>
+</footer>
 
-  </footer>
 </body>
 </html>

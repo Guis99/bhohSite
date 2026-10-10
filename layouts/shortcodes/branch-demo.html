@@ -1,0 +1,96 @@
+{{- /*
+Embeds one of the interactive branch-predictor demos.
+
+  {{< branch-demo counter >}}   one saturating counter, no table
+  {{< branch-demo bimodal >}}   a table of counters indexed by PC
+  {{< branch-demo gshare  >}}   the same, with global history mixed in
+
+The .js files live next to the page that uses them, as resources of its
+page bundle, and are copied verbatim from ../miscpp/branch_predictor/web
+(driver.js is the Emscripten build output of driver.cpp, with the wasm
+embedded). To pick up changes there: run `make` in that directory and re-copy
+them into this post's directory. counter_demo.js is local to this site, as is the verticalSlider view in
+counter_view.js (the table demos use it; the counter demo keeps the dial).
+
+app.js carries one local change on top of upstream: each demo is created only
+if its element is on the page, so counter/bimodal/gshare can be used in any
+combination.
+
+Hugo publishes every resource of a page bundle as-is, so the scripts are
+referenced at their own URLs rather than fingerprinted copies -- fingerprinting
+here would publish each file twice. `defer` keeps them in this order and runs
+them after the markup below exists.
+
+The markup, ids and class names below are the ones app.js and counter_view.js
+look for; the <style> block is the demo's own CSS from its index.html, scoped
+to .branch-demo so it cannot reach the rest of the site. The dial graphics
+inject their own .cv-* styles at runtime.
+*/ -}}
+
+{{- $id := trim (.Get 0) " " -}}
+{{- if not (in (slice "counter" "bimodal" "gshare") $id) -}}
+  {{- errorf "branch-demo: unknown demo %q in %s (expected \"counter\", \"bimodal\" or \"gshare\")" $id .Page.File.Path -}}
+{{- end -}}
+
+{{- if not (.Page.Store.Get "branchDemoAssets") -}}
+{{- .Page.Store.Set "branchDemoAssets" true -}}
+<style>
+  .branch-demo { margin-block: 1.5rem; padding: 1rem 1.25rem;
+                 border: 1px solid #e0e0e0; border-radius: 8px; }
+  .branch-demo button { font: inherit; padding: .2rem .8rem; cursor: pointer; }
+  .branch-demo .knobs { display: grid; grid-template-columns: max-content minmax(0, 11rem) auto;
+                        gap: .35rem .75rem; align-items: center; margin-block: .75rem; }
+  .branch-demo .knobs input { width: 100%; margin: 0; }
+  .branch-demo .knobs output { opacity: .75; font-variant-numeric: tabular-nums; }
+  .branch-demo .branch { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-block: .3rem; }
+  .branch-demo .branch .pc, .branch-demo .branch .maps { opacity: .75; font-variant-numeric: tabular-nums; }
+  .branch-demo .queue { display: flex; gap: 6px; margin-block: .75rem; }
+  .branch-demo .queue span { width: 3rem; height: 1.8rem; display: grid; place-items: center;
+                             border: 1px dashed #8888; border-radius: 4px; font-weight: 600; font-size: 13px; }
+  .branch-demo .queue span.T { background: #009541; border: 1px solid #1f9d55; color: #fff; }
+  .branch-demo .queue span.NT { background: #d64545; border: 1px solid #b40000; color: #fff; }
+  .branch-demo .status { margin: 0; }
+  .branch-demo .tally, .branch-demo .info { margin: .25rem 0 .75rem; opacity: .75; font-variant-numeric: tabular-nums; }
+  .branch-demo .masked { opacity: .45; text-decoration: line-through; }
+  .branch-demo .dials { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; }
+  .branch-demo .slot { min-height: 122px; border-radius: 6px; }
+  .branch-demo .slot:not(.spawned) { border: 1px dashed #8883; }
+  .branch-demo .tags { min-height: 1.2em; text-align: center; font-size: 11px; font-weight: 600; letter-spacing: .06em; }
+  .branch-demo .controls { display: flex; gap: .5rem; align-items: center; margin-block: .75rem; }
+  .branch-demo .dial { max-width: 160px; margin-block: .75rem; }
+</style>
+{{- $page := .Page -}}
+{{- range slice "driver.js" "counter_view.js" "app.js" "counter_demo.js" -}}
+  {{- with $page.Resources.Get . -}}
+<script defer src="{{ .RelPermalink }}"></script>
+  {{- else -}}
+    {{- errorf "branch-demo: %q is not a resource of %s -- the page must be a bundle (a directory with index.md) holding driver.js, counter_view.js and app.js" . $page.Path -}}
+  {{- end -}}
+{{- end }}
+{{- end }}
+
+{{- if eq $id "counter" }}
+<section id="satcounter" class="branch-demo">
+  <p class="demo-usage"></p>
+  <div class="controls">
+    <button data-taken>T</button>
+    <button data-not-taken>NT</button>
+    <button data-reset>Reset</button>
+  </div>
+  <p class="status"></p>
+  <p class="tally"></p>
+  <div class="dial"></div>
+</section>
+{{- else }}
+<section id="{{ $id }}" class="branch-demo">
+  <p class="demo-usage"></p>
+  <div class="knobs"></div>
+  <button data-reset>Reset</button>
+  <div class="branches"></div>
+  <div class="queue"></div>
+  <p class="status"></p>
+  <p class="tally"></p>
+  <p class="info"></p>
+  <div class="dials"></div>
+</section>
+{{- end }}

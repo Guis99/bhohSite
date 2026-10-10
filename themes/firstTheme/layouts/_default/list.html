@@ -1,8 +1,25 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
-  {{ .Content }}
-  {{ range .Pages }}
-    <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-    {{ .Summary }}
-  {{ end }}
+  <header class="page-header">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{- with .Description }}<p class="page-subtitle">{{ . }}</p>{{ end }}
+  </header>
+
+  {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+
+  {{- $pages := .Pages }}
+  {{- if eq .Section "blog" }}
+    {{- $pages = .Pages.ByDate.Reverse }}
+  {{- else }}
+    {{- $pages = .Pages.ByWeight }}
+  {{- end }}
+
+  {{- with $pages }}
+    <ul class="cards">
+      {{- range . }}
+        {{ partial "card.html" . }}
+      {{- end }}
+    </ul>
+  {{- else }}
+    <p class="empty">Nothing here yet.</p>
+  {{- end }}
 {{ end }}

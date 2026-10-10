@@ -1,2 +1,6 @@
-<h1>{{ site.Title }}</h1>
-{{ partial "menu.html" (dict "menuID" "main" "page" .) }}
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-title" href="{{ "/" | relURL }}">{{ site.Params.author }}</a>
+    {{ partial "menu.html" (dict "menuID" "main" "page" .) }}
+  </div>
+</header>

@@ -2,3 +2,37 @@ baseURL = 'https://example.org/'
 languageCode = 'en-us'
 title = 'Gatordynamics'
 theme = 'firstTheme'
+
+# Blog posts are dated and listed newest-first; FAQ entries are ordered by weight.
+[params]
+  author = 'Brian Hoh'
+  description = 'Personal site of Brian Hoh.'
+
+[[menus.main]]
+name = 'Home'
+pageRef = '/'
+weight = 10
+
+[[menus.main]]
+name = 'Blog'
+pageRef = '/blog'
+weight = 20
+
+[[menus.main]]
+name = 'FAQ'
+pageRef = '/faq'
+weight = 30
+
+[[menus.main]]
+name = 'Contact'
+pageRef = '/contact'
+weight = 40
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[markup.highlight]
+  style = "github"
+  lineNos = true
+  lineNumbersInTable = false
+  tabWidth = 4

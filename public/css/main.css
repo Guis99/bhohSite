@@ -1,22 +1,269 @@
+/*
+  Intentionally empty — browser defaults only.
+
+  The markup carries class hooks, ready for whatever you want to write:
+
+    .site-header / .site-header__inner   header bar
+    .site-title                          site name, links home
+    .nav / .nav__link                    Home | Blog | FAQ | Contact
+      .nav__link.is-active               link for the page you're on
+      .nav__link.is-ancestor             link for the section you're in
+    .container                           width wrapper (header, main, footer)
+    .home                                homepage body
+    .page-header / .page-title
+    .page-subtitle                       section description
+    .page-meta                           date on a single page
+    .cards                               <ul> of section entries
+    .card / .card__link                  one entry; the whole card is the link
+    .card__title / .card__date / .card__summary
+    .prose                               rendered Markdown body
+    .tags / .tag
+    .back                                "Back to Blog" link
+    .empty                               shown when a section has no pages
+    .site-footer
+*/
+
+/* Page width. .container wraps the header, main and footer, so all three stay
+   on the same column. The cap is 75% of the physical screen width, set by a JS
+   shim in head.html as --max-text-width; the CSS fallback is 1400px for when
+   the script does not run. 2.5rem subtracted so narrow viewports keep a gutter
+   on each side rather than text touching the edge. */
+
+.container {
+  width: min(100% - 5.5rem, var(--max-text-width, 1400px));
+  margin-inline: auto;
+}
+
+/* Images scale down to fit their column instead of overflowing it; height:auto
+   keeps the aspect ratio once an <img> carries width/height attributes. */
+
+img {
+  max-width: min(100%, 800px);
+  height: auto;
+}
+
+.prose figure.small img { width: 60%; max-width: min(60%, 400px);}
+.prose figure.medium img { width: 80%; max-width: min(75%, 500px);}
+.prose figure.large img { width: 95%; max-width: min(95%, 800px);}
+
+/* Content images fill the text column and grow and shrink with it. Use
+   max-width here instead of width if you'd rather an image narrower than the
+   column stay at its natural size rather than being upscaled. */
+
+.prose img {
+  width: 100%;
+}
+
+/* Atkinson Hyperlegible, self-hosted from static/fonts/ (so no third-party
+   request). Designed by the Braille Institute for legibility at small sizes
+   and low contrast; ships Regular, Italic, Bold, and Bold Italic so no weight
+   or style is synthesised. */
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("/fonts/atkinson-hyperlegible-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  font-size: 140px;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("/fonts/atkinson-hyperlegible-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("/fonts/atkinson-hyperlegible-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("/fonts/atkinson-hyperlegible-bold-italic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 body {
-  color: #222;
-  font-family: sans-serif;
-  line-height: 1.5;
-  margin: 1rem;
-  max-width: 768px;
+  font-family: "Atkinson Hyperlegible", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 18px;
 }
 
-header {
-  border-bottom: 1px solid #222;
-  margin-bottom: 1rem;
+/* Playfair Display for headings only: a display face does its best work large,
+   and unlike Radley it carries real weights (the variable file covers 400-900),
+   so headings get a drawn bold instead of a synthesised one. The italic face is
+   only downloaded if an italic heading actually appears. */
+
+@font-face {
+  font-family: "Playfair Display";
+  src: url("/fonts/playfair-display-latin.woff2") format("woff2-variations");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
 }
 
-footer {
-  border-top: 1px solid #222;
-  margin-top: 1rem;
+@font-face {
+  font-family: "Playfair Display";
+  src: url("/fonts/playfair-display-italic-latin.woff2") format("woff2-variations");
+  font-weight: 400 900;
+  font-style: italic;
+  font-display: swap;
 }
 
-a {
-  color: #00e;
-  text-decoration: none;
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
+/* Diagram blocks: a fenced code block with no language, which Hugo renders as a
+   bare <pre> (highlighted code is wrapped in div.highlight instead, so it keeps
+   its own monospace). Change --diagram-font in one place to restyle every
+   diagram; "ui-monospace, monospace" is the alignment-safe choice, since a
+   proportional face does not line characters up into columns. */
+
+:root {
+  --diagram-font: "Times New Roman", Times, serif;
+}
+
+.prose > pre,
+.prose > pre code {
+  font-family: var(--diagram-font);
+}
+
+/* Code and diagram blocks: long lines scroll within the block instead of
+   stretching the page and triggering a horizontal scrollbar on <body>. */
+
+.prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Segment highlighting for the folded-XOR diagram: 6 soft tints, each applied
+   to every occurrence of a given 6-bit slice (concatenated row, split row,
+   and its row in the XOR stack) so corresponding bits are easy to track. */
+
+.prose pre .seg1 { background: #ffd6d6; }
+.prose pre .seg2 { background: #ffe3c2; }
+.prose pre .seg3 { background: #fff5b8; }
+.prose pre .seg4 { background: #d3f0cf; }
+.prose pre .seg5 { background: #cfe4f7; }
+.prose pre .seg6 { background: #e4d5f0; }
+
+/* Prose tables (truth tables, small data tables). Sized to content rather than
+   stretched across the column; cells are centered because the common case here
+   is short categorical values. Override text-align per cell if you add a wider
+   table with longer content. */
+
+.prose table {
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+}
+
+.prose th,
+.prose td {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid #cfcfcf;
+  text-align: center;
+}
+
+.prose th {
+  background: #f3f3f3;
+  font-weight: 600;
+}
+
+/* Sidebar comments / asides: a markdown blockquote (lines prefixed with `>`)
+   renders as a tinted callout with a left accent bar. Reads as a visual aside
+   next to the main flow, without actually floating out of column (which would
+   break on narrow viewports). */
+
+.prose blockquote {
+  margin: 1.2rem 0;
+  padding: 0.6rem 1rem;
+  border-left: 3px solid #999;
+  background: #f7f7f7;
+  color: #444;
+  font-style: italic;
+}
+
+.prose blockquote p {
+  margin: 0.3rem 0;
+}
+
+.prose blockquote p:first-child { margin-top: 0; }
+.prose blockquote p:last-child  { margin-bottom: 0; }
+
+/* Tighten vertical spacing inside markdown lists. GFM promotes a list to
+   "loose" (each <li> wraps its content in <p>) as soon as a blank line
+   appears inside, which is often required just to attach continuation
+   paragraphs or sub-bullets. Zero out the inner <p> margins so a loose list
+   doesn't bloom vertically. */
+
+.prose li > p {
+  margin: 0.15rem 0;
+}
+
+.prose li {
+  margin: 0.1rem 0;
+}
+
+/* Code-block font size, independent of body text and of the Times-New-Roman
+   diagram <pre> blocks. Hugo wraps Chroma-highlighted blocks in div.highlight;
+   bare diagram <pre> elements are not wrapped, so this scopes cleanly. Tweak
+   --code-font-size to taste. */
+
+:root {
+  --code-font-size: 0.88em;
+}
+
+.prose .highlight pre,
+.prose .highlight code {
+  font-size: var(--code-font-size);
+}
+
+/* JetBrains Mono, self-hosted. Google Fonts serves a variable woff2 covering
+   weights 100-800, so one file carries both regular and bold. */
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono-latin.woff2") format("woff2-variations");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Code-block panel: tint background, pad, round corners. Chroma inline styles
+   paint the <pre> background from the chosen `style =` theme; we add padding
+   and radius here so the frame reads as a distinct panel. */
+
+.prose .highlight {
+  margin: 1.2rem 0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.prose .highlight pre {
+  padding: 0.9rem 1.1rem;
+  margin: 0;
+  background: #f6f8fa;
+  border: 1px solid #e4e8ec;
+  border-radius: 6px;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* Line numbers: muted colour and a thin trailing gutter so numbers do not
+   compete visually with code. Chroma emits <span class="ln"> inline when
+   lineNumbersInTable = false. */
+
+.prose .highlight .ln {
+  color: #a0a7af;
+  padding-right: 0.9rem;
+  user-select: none;
+  -webkit-user-select: none;
 }
