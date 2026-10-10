@@ -1,6 +1,6 @@
 baseURL = 'https://example.org/'
 languageCode = 'en-us'
-title = 'Gatordynamics'
+title = 'Brian Hoh'
 theme = 'firstTheme'
 
 # Blog posts are dated and listed newest-first; FAQ entries are ordered by weight.

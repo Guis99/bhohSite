@@ -43,8 +43,8 @@ img {
 }
 
 .prose figure.small img { width: 60%; max-width: min(60%, 400px);}
-.prose figure.medium img { width: 80%; max-width: min(75%, 500px);}
-.prose figure.large img { width: 95%; max-width: min(95%, 800px);}
+.prose figure.medium img { width: 80%; max-width: min(75%, 700px);}
+.prose figure.large img { width: 95%;}
 
 /* Content images fill the text column and grow and shrink with it. Use
    max-width here instead of width if you'd rather an image narrower than the
