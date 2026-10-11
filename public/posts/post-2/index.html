@@ -12,13 +12,24 @@
   
   document.documentElement.style.setProperty('--max-text-width',
     Math.round(window.screen.width * 0.75) + 'px');
+
+  
+  
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      var theme = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch (_) {}
+  })();
 </script>
 <link rel="icon" href="/favicon.ico">
 
-    <link rel="stylesheet" href="/css/main.css">
+      <link rel="stylesheet" href="/css/syntax.css">
+      <link rel="stylesheet" href="/css/main.css">
 
 
-      <script src="/js/main.js"></script>
+      <script src="/js/main.js" defer></script>
 
 
 </head>
@@ -69,5 +80,6 @@
   </div>
 </footer>
 
+  <button type="button" class="theme-toggle" aria-label="Toggle dark mode"></button>
 </body>
 </html>

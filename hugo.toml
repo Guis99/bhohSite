@@ -32,7 +32,7 @@ weight = 40
   unsafe = true
 
 [markup.highlight]
-  style = "github"
+  noClasses = false
   lineNos = true
   lineNumbersInTable = false
   tabWidth = 4

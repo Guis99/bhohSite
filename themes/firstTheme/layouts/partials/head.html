@@ -9,6 +9,16 @@
   // different monitor; reload to update.
   document.documentElement.style.setProperty('--max-text-width',
     Math.round(window.screen.width * 0.75) + 'px');
+
+  // Apply saved (or system-preferred) theme BEFORE first paint so the page
+  // never flashes light when the user has chosen dark.
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      var theme = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch (_) {}
+  })();
 </script>
 <link rel="icon" href="{{ "favicon.ico" | relURL }}">
 {{ partialCached "head/css.html" . }}

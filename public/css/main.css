@@ -149,12 +149,12 @@ h1, h2, h3, h4, h5, h6 {
    to every occurrence of a given 6-bit slice (concatenated row, split row,
    and its row in the XOR stack) so corresponding bits are easy to track. */
 
-.prose pre .seg1 { background: #ffd6d6; }
-.prose pre .seg2 { background: #ffe3c2; }
-.prose pre .seg3 { background: #fff5b8; }
-.prose pre .seg4 { background: #d3f0cf; }
-.prose pre .seg5 { background: #cfe4f7; }
-.prose pre .seg6 { background: #e4d5f0; }
+.prose pre .seg1 { background: var(--seg1); }
+.prose pre .seg2 { background: var(--seg2); }
+.prose pre .seg3 { background: var(--seg3); }
+.prose pre .seg4 { background: var(--seg4); }
+.prose pre .seg5 { background: var(--seg5); }
+.prose pre .seg6 { background: var(--seg6); }
 
 /* Prose tables (truth tables, small data tables). Sized to content rather than
    stretched across the column; cells are centered because the common case here
@@ -169,12 +169,12 @@ h1, h2, h3, h4, h5, h6 {
 .prose th,
 .prose td {
   padding: 0.4rem 0.9rem;
-  border: 1px solid #cfcfcf;
+  border: 1px solid var(--table-border);
   text-align: center;
 }
 
 .prose th {
-  background: #f3f3f3;
+  background: var(--table-head-bg);
   font-weight: 600;
 }
 
@@ -186,9 +186,9 @@ h1, h2, h3, h4, h5, h6 {
 .prose blockquote {
   margin: 1.2rem 0;
   padding: 0.6rem 1rem;
-  border-left: 3px solid #999;
-  background: #f7f7f7;
-  color: #444;
+  border-left: 3px solid var(--callout-border);
+  background: var(--callout-bg);
+  color: var(--callout-text);
   font-style: italic;
 }
 
@@ -222,8 +222,9 @@ h1, h2, h3, h4, h5, h6 {
   --code-font-size: 0.88em;
 }
 
-.prose .highlight pre,
-.prose .highlight code {
+/* Set once on the pre only; code inherits. Setting it on both compounds
+   (code's 0.88em becomes 0.88 * pre's 0.88em = 0.77 of body). */
+.prose .highlight pre {
   font-size: var(--code-font-size);
 }
 
@@ -251,8 +252,8 @@ h1, h2, h3, h4, h5, h6 {
 .prose .highlight pre {
   padding: 0.9rem 1.1rem;
   margin: 0;
-  background: #f6f8fa;
-  border: 1px solid #e4e8ec;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
   border-radius: 6px;
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
@@ -262,8 +263,204 @@ h1, h2, h3, h4, h5, h6 {
    lineNumbersInTable = false. */
 
 .prose .highlight .ln {
-  color: #a0a7af;
+  color: var(--linenum);
   padding-right: 0.9rem;
   user-select: none;
   -webkit-user-select: none;
+}
+
+/* ===== Theming =============================================================
+   All color-ish values are declared as custom properties here, so dark mode is
+   a single override block below. Code syntax colors live in syntax.css (both
+   light default and dark scoped under [data-theme="dark"]). */
+
+:root {
+  /* light defaults */
+  --bg:            #ffffff;
+  --text:          #111111;
+  --text-muted:    #444444;
+  --link:          #0b57d0;
+  --border-faint:  #e0e0e0;
+
+  --table-border:  #cfcfcf;
+  --table-head-bg: #f3f3f3;
+
+  --callout-bg:     #f7f7f7;
+  --callout-border: #999999;
+  --callout-text:   #444444;
+
+  --code-bg:     #f6f8fa;
+  --code-border: #e4e8ec;
+  --linenum:     #a0a7af;
+
+  --seg1: #ffd6d6;
+  --seg2: #ffe3c2;
+  --seg3: #fff5b8;
+  --seg4: #d3f0cf;
+  --seg5: #cfe4f7;
+  --seg6: #e4d5f0;
+
+  --scrollbar-track:       transparent;
+  --scrollbar-thumb:       #c0c0c0;
+  --scrollbar-thumb-hover: #808080;
+
+  --ui-btn-bg:     #ffffff;
+  --ui-btn-border: #d0d0d0;
+  --ui-btn-text:   #333333;
+}
+
+[data-theme="dark"] {
+  --bg:            #262a31;
+  --text:          #e6edf3;
+  --text-muted:    #a0a7af;
+  --link:          #7cb0ff;
+  --border-faint:  #3a3f48;
+
+  --table-border:  #3a3f48;
+  --table-head-bg: #2f343d;
+
+  --callout-bg:     #2f343d;
+  --callout-border: #777777;
+  --callout-text:   #c0c7ce;
+
+  --code-bg:     #1e2229;
+  --code-border: #3a3f48;
+  --linenum:     #7a828c;
+
+  /* darkened segment tints: same hues at lower lightness so black-on-tint
+     stays legible against the dark page background */
+  --seg1: #5a2a2a;
+  --seg2: #5a3a1f;
+  --seg3: #5a4a1f;
+  --seg4: #2a4a2a;
+  --seg5: #1f3a5a;
+  --seg6: #3a2a4a;
+
+  --scrollbar-thumb:       #3a4049;
+  --scrollbar-thumb-hover: #5a6069;
+
+  --ui-btn-bg:     #1a1f26;
+  --ui-btn-border: #2a2f36;
+  --ui-btn-text:   #e0e0e0;
+}
+
+html {
+  /* iOS Safari auto-boosts text inside long content blocks, which blew up
+     bold-keyword spans inside <pre>; this disables that heuristic. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background-color 0.15s linear, color 0.15s linear;
+}
+
+a { color: var(--link); }
+
+/* ===== Theme toggle button (fixed bottom-right, next to scroll-top) ======== */
+
+.theme-toggle {
+  position: fixed;
+  right: 1.4rem;
+  bottom: 1.4rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  border: 1px solid var(--ui-btn-border);
+  background: var(--ui-btn-bg);
+  color: var(--ui-btn-text);
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 95;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.15s ease;
+}
+.theme-toggle:hover { background: var(--border-faint); }
+
+/* ===== Overlay scrollbar ===================================================
+   Fixed to the right edge of the viewport. The thumb reflects scroll position;
+   its height = viewport/document ratio. Fades in on scroll or hover, out after
+   a timeout managed in main.js. Hidden entirely on touch/coarse-pointer
+   devices via @media below. */
+
+.site-scrollbar {
+  position: fixed;
+  top: 0;
+  right: 2px;
+  width: 18px;
+  height: 100vh;
+  z-index: 90;
+  pointer-events: auto;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.site-scrollbar.is-visible { opacity: 1; }
+
+.site-scrollbar__thumb {
+  width: 100%;
+  background: var(--scrollbar-thumb);
+  border-radius: 9px;
+  transition: background-color 0.15s ease;
+}
+.site-scrollbar:hover .site-scrollbar__thumb {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Hide native scrollbar once the overlay is in play (JS adds this class on
+   desktop only). */
+@media (hover: hover) and (pointer: fine) {
+  html.has-overlay-scrollbar { scrollbar-width: none; }
+  html.has-overlay-scrollbar::-webkit-scrollbar { display: none; width: 0; }
+}
+@media (hover: none), (pointer: coarse) {
+  .site-scrollbar { display: none !important; }
+}
+
+/* ===== Scroll-to-top button =============================================== */
+
+.scroll-top {
+  position: fixed;
+  /* Sits to the LEFT of the toggle: toggle is at right 1.4rem and is 2.6rem
+     wide, with a 0.5rem gap. */
+  right: calc(1.4rem + 2.6rem + 0.5rem);
+  bottom: 1.4rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  border: 1px solid var(--ui-btn-border);
+  background: var(--ui-btn-bg);
+  color: var(--ui-btn-text);
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 95;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.15s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+.scroll-top.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.scroll-top:hover { background: var(--border-faint); }
+
+/* Prevent text selection while dragging the scrollbar thumb */
+body.is-scrollbar-dragging { user-select: none; -webkit-user-select: none; }
+body.is-scrollbar-dragging .site-scrollbar { opacity: 1 !important; }
+
+@media (max-width: 480px) {
+  .theme-toggle { right: 1rem; bottom: 1rem; }
+  .scroll-top   { right: calc(1rem + 2.6rem + 0.5rem); bottom: 1rem; }
 }

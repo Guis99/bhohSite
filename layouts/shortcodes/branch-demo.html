@@ -36,7 +36,7 @@ inject their own .cv-* styles at runtime.
 {{- .Page.Store.Set "branchDemoAssets" true -}}
 <style>
   .branch-demo { margin-block: 1.5rem; padding: 1rem 1.25rem;
-                 border: 1px solid #e0e0e0; border-radius: 8px; }
+                 border: 1px solid var(--border-faint, #e0e0e0); border-radius: 8px; }
   .branch-demo button { font: inherit; padding: .2rem .8rem; cursor: pointer; }
   .branch-demo .knobs { display: grid; grid-template-columns: max-content minmax(0, 11rem) auto;
                         gap: .35rem .75rem; align-items: center; margin-block: .75rem; }
