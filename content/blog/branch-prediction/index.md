@@ -1,6 +1,6 @@
 +++
 title = 'Simulating Branch Predictors'
-date = '2026-10-07T19:58:04-04:00'
+date = '2026-10-10T19:58:04-04:00'
 description = ''
 tags = []
 draft = false
