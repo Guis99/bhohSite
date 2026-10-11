@@ -508,7 +508,7 @@ Some observations:
 - The overall history table distribution is for the most part dominated by history lengths under 100
 - The longest trace shown is about 18 million instructions long. Considering modern processors run in the GHz range, this represents a real-time interval on the order of milliseconds.
 
-By the way, instrumenting branch predictors in this fashion is not a novel practice. My experiments are inspired by this [blog post](https://mechanicalgenie.substack.com/p/interpreting-saturating-counters?utm_campaign=post-expanded-share&utm_medium=post%20viewer) from Karl Moser. It specifically mentions a study that looked at the joint distribution of predictor and useful counters to inform the heuristic behind identifying so-called "cold counters" - counters newly allocated or weakly predicting. The studies in my post are my best guess at other avenues of attack.
+By the way, instrumenting branch predictors in this fashion is not a novel practice. My experiments are inspired by this [blog post](https://mechanicalgenie.substack.com/p/interpreting-saturating-counters?utm_campaign=post-expanded-share&utm_medium=post%20viewer) from Karl Mose. It specifically mentions a study that looked at the joint distribution of predictor and useful counters to inform the heuristic behind identifying so-called "cold counters" - counters newly allocated or weakly predicting. The studies in my post are my best guess at other avenues of attack.
 
 ## Improving on TAGE
 The original TAGE design has since undergone many iterations of improvement as described in [this paper](https://jilp.org/cbp2016/paper/AndreSeznecLimited.pdf).
