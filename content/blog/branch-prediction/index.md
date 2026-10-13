@@ -255,13 +255,13 @@ class GSharePredictor : public BranchPredictorBase {
 
 {{< branch-demo gshare >}}
 
-This is known as a *Gshare* branch predictor. The etymology of this name this isn't really clear, but the existence of a [less capable sibling](https://www.ece.ucdavis.edu/~akella/270W05/mcfarling93combining.pdf) that also uses global history known as "Gselect" seems to at least hint at what the "G" stands for.
+This is known as a *Gshare* branch predictor, introduced alongside "Gselect" in a [technical note by Scott McFarling](https://www.ece.ucdavis.edu/~akella/270W05/mcfarling93combining.pdf).
 
 Anyways, how will this predictor perform in practice? Remember, in a real computer, many branches will be competing for spots in the PHT.
 
 On one hand, incorporating history into our indexing scheme allows for smarter selection. On the other hand, one branch now potentially maps to as many as `2^k` different counters, since a sequence of k bits has 2^k possible variations.
 
-Or, you might try convincing yourself that this is actually fine; maybe certain combinations of branch PC and history occur rarely enough that any interference they cause is negligible. These all seem like testable hypotheses... (HMMMMMMMMMM).
+Or, you might try convincing yourself that this is actually fine; maybe certain combinations of branch PC and history occur rarely enough that any interference they cause is negligible. These all seem like testable hypotheses...
 
 ## Evaluating a predictor
 
@@ -299,7 +299,7 @@ Some more observations:
 
 These questions have been the bulk of the motivation for research in this area for the past two decades or so. 
 
-In 2001, Daniel A. Jimenez et. al. proposed using a perceptron architecture, which uses a weighted sum of history bits to determine a branch outcome. In 2005, Pierre Michaud proposed PPM, which dynamically selects a different history length to use in predictions based on past performance. And in 2008, André Seznec and Michaud proposed an improvement on this architecture that became the basis of most state-of-the-art predictors to this day.
+In 2001, Daniel A. Jimenez and Calvin Lin proposed using a [perceptron-based predictor](https://www.cs.utexas.edu/~lin/papers/hpca01.pdf), which uses a weighted sum of history bits to determine a branch outcome. In 2005, Pierre Michaud proposed [PPM](https://jilp.org/vol7/v7paper10.pdf), which dynamically selects a different history length to use in predictions based on past performance. And in 2006, André Seznec and Michaud proposed [TAGE](https://inria.hal.science/hal-03408381/document), which became the basis for many modern predictors.
 
 ## The TAGE branch predictor
 
@@ -353,7 +353,7 @@ Consider this example where we compute a 6-bit index using a 34-bit history:
   100110      index 38 of 64
 </pre>
 
-This is a pretty expensive operation to do from scratch. XOR is both associative and commutative, which means the hash can be computed incrementally:
+This is a pretty expensive operation to do from scratch on every prediction. XOR is both associative and commutative, which means the hash can be computed incrementally:
 
 ```cpp
 struct csr { // Circular Shift Register
@@ -629,7 +629,7 @@ bool predict_sc(u64 pc) {
 } 
 ```
 
-The prediction outputted from the statistical corrector gives the final call on which direction to predict.
+The prediction outputted by the statistical corrector gives the final call on which direction to predict.
 
 ## Was it worth it?
 The improvements were marginal but visible:
@@ -659,11 +659,9 @@ Is it impressive that my implementation scores so closely? Not really, for a cou
 ## Great, let's see the hardware implementation
 `(Disclaimer: I am NOT a hardware engineer. If I've missed anything and you have opinions, please reach out!)`
 
-Unfortunately, a branch predictor with the features described above is impractical for actual hardware due to latency, area, and power requirements. These calculations may be the subject of a future post.
+Unfortunately, a branch predictor with the features described above is impractical for actual hardware due to latency, area, and power requirements, as conceded by the authors of TAGE. Many early publications (2008 - ca. 2020) describe designs optimized specifically for performance on the ChampSim simulator. 
 
-It's worth noting that the big wigs in the branch prediction community themselves admit that much of their architectural optimizations are largely empirical and driven by fine-tuning on a training dataset. Furthermore, many early publications (2008 - ca. 2020) describe designs optimized specifically for performance on the ChampSim simulator. 
-
-In 2024, Seznec released a [whitepaper](https://hal.science/hal-04804900v1/document) detailing a modified version of his predictor that would actually be feasible to implement in real hardware. No more local per-branch history Statistical Corrector features, no more 20+ interleaved history banks. This new design (perhaps unsurprisingly) performed slightly worse than the 2016 version.
+In 2024, Seznec released a [whitepaper](https://hal.science/hal-04804900v1/document) detailing a modified version of his predictor that would actually be feasible to implement in real hardware. No more local per-branch history tracking, no more extensive history bank interleaving. This new design (perhaps unsurprisingly) performed slightly worse than the 2016 version.
 
 Despite it all, there is strong [evidence](https://arxiv.org/abs/2502.10719) that most modern processors use a branch predictor design inspired by or derived from that of TAGE.
 
@@ -680,7 +678,6 @@ Writing, debugging, and evaluating these virtual branch predictors was a uniquel
 Sometimes, a bug would give comically bad results. Other times, I'd get subtly wrong results: a slight regression, unsatisfactory accuracy, etc. I couldn't just print out every branch and its effect on the internal state of my predictor; on a million+ instruction trace this would be absurd. So, I had to get a bit clever to extract the most actionable information per request to `std::ostream& os operator<<`. This eventually led to the idea of actually presenting this data as a standalone method of interpreting the internals of a branch predictor. I'm curious about other instances where diagnostic information was repurposed in this manner.
 
 Most of the state-of-the-art implementations that I encountered are also a prime example of "the code is the spec". The publications introducing these implementations provided what mostly amounted to an outline, with the algorithm's details available only through reading the (at-times cryptic) code. Reconciling the high-level descriptions given in the papers with the nitty-gritty implementation details was nonetheless enlightening. 
-
 
 At the beginning of this post I feigned incredulity at the fact that modern branch predictors are:
 - are correct over 98% of the time

@@ -6,12 +6,12 @@
     <description>Recent content in Home on Brian Hoh</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Oct 2026 19:58:04 -0400</lastBuildDate>
+    <lastBuildDate>Sat, 10 Oct 2026 19:58:04 -0400</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Simulating Branch Predictors</title>
       <link>http://localhost:1313/blog/branch-prediction/</link>
-      <pubDate>Wed, 07 Oct 2026 19:58:04 -0400</pubDate>
+      <pubDate>Sat, 10 Oct 2026 19:58:04 -0400</pubDate>
       <guid>http://localhost:1313/blog/branch-prediction/</guid>
       <description>&lt;p&gt;Branch predictors are an essential component of modern CPUs as well as the subject of this very silly meme I encountered on The Internet one day:&lt;/p&gt;&#xA;&lt;figure class=&#34;small&#34;&gt;&lt;img src=&#34;http://localhost:1313/blog/branch-prediction/images/image.png&#34;&#xA;    alt=&#34;a very silly meme&#34;&gt;&#xA;&lt;/figure&gt;&#xA;&#xA;&lt;p&gt;This very silly meme led me down a rabbit hole where I discovered progressively wilder statistics about state-of-the-art branch predictors, like that they&amp;hellip;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;are correct over 98% of the time&lt;/li&gt;&#xA;&lt;li&gt;are essentially small neural networks embedded in the chip&lt;/li&gt;&#xA;&lt;li&gt;look hundreds or even thousands of branches into the past to make decisions&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;My initial reaction was &amp;ldquo;how could any of this &lt;em&gt;possibly&lt;/em&gt; be true?&amp;rdquo;.&lt;/p&gt;</description>
     </item>
