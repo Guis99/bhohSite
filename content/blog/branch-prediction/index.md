@@ -297,7 +297,7 @@ Some more observations:
 - There isn't necessarily a single history length that performs the best
 - Performance is sensitive to available storage
 
-These questions have been the bulk of the motivation for research in this area for the past two decades or so. 
+These observations have driven much of the research in this area for the past two decades or so. 
 
 In 2001, Daniel A. Jimenez and Calvin Lin proposed using a [perceptron-based predictor](https://www.cs.utexas.edu/~lin/papers/hpca01.pdf), which uses a weighted sum of history bits to determine a branch outcome. In 2005, Pierre Michaud proposed [PPM](https://jilp.org/vol7/v7paper10.pdf), which dynamically selects a different history length to use in predictions based on past performance. And in 2006, André Seznec and Michaud proposed [TAGE](https://inria.hal.science/hal-03408381/document), which became the basis for many modern predictors.
 
